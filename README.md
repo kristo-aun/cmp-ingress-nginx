@@ -1,13 +1,13 @@
-# Custom Ingress
+# Custom Ingress Chart
 
 This chart is based on the Ingress OTS (off-the-shelf) helm chart, retrieved and pinned to a specific upstream version.
 
 Customization:
-- ingress to prioritize incoming X-Forwarded-* headers to the ones set in the [template](https://raw.githubusercontent.com/kubernetes/ingress-nginx/helm-chart-3.34.0/rootfs/etc/nginx/template/nginx.tmpl).
+- ingress to prioritize incoming X-Forwarded-* headers to the ones set in the [template](https://raw.githubusercontent.com/kubernetes/ingress-nginx/helm-chart-3.34.0/rootfs/etc/nginx/template/nginx.tmpl). This is useful if there is another reverse-proxy in front of the ingress controller 
 
 ## Install
 
-Download a repository chart to a local copy
+Download the Ingress chart from the repository to a local copy
 
     helm dep update
 
@@ -19,7 +19,7 @@ Deploy
 
 ## Verify
 
-Get controller pod name
+Save the controller pod name to a variable
 
     POD_NAME=$(kubectl get pods -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')
 
@@ -44,7 +44,9 @@ Should produce:
 
     {{ $proxySetHeader }} X-Forwarded-Host       $http_x_forwarded_host;
 
-## Remove
+You can now proceed to deploy Ingress for your applications.
+
+## Uninstall
 
     helm delete cmp-ingress-nginx
 
