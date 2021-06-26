@@ -1,0 +1,5 @@
+ingress-nginx:
+  controller:
+    customTemplate:
+      configMapName: "ingress-nginx-custom-template"
+      configMapKey: "nginx.tmpl"
